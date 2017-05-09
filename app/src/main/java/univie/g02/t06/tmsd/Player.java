@@ -6,6 +6,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.io.IOException;
 
 /**
  * Created by UserN1 on 08.05.17.
@@ -19,20 +22,28 @@ public class Player extends Activity implements View.OnClickListener {
     private Button next;
     private Button prev;
 
+    private TextView songTitel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        songTitel = (TextView) findViewById(R.id.songTitel);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player);
 
         play = (Button) findViewById(R.id.btnPlay);
         play.setOnClickListener(this);
+        play.setText("||");
 
         next = (Button) findViewById(R.id.btnNext);
         next.setOnClickListener(this);
+        next.setText(">|");
+
 
         prev = (Button) findViewById(R.id.btnPrev);
         prev.setOnClickListener(this);
+        prev.setText("<|");
     }
     @Override
     public void onClick(View v) {
@@ -44,11 +55,15 @@ public class Player extends Activity implements View.OnClickListener {
                 else {
                     player.reset();
                     //player.setDataSource();
-                    player.prepare();
+                    try {
+                        player.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     player.start();
 
                     String songTitle = "test";
-                    //songTitel.setText(songTitle);
+                    songTitel.setText(songTitle);
                 }
                 break;
             case R.id.btnPrev:
