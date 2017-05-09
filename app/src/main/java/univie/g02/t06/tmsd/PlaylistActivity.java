@@ -35,25 +35,6 @@ public class PlaylistActivity extends AppCompatActivity {
                 listItems);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                    AlertDialog.Builder adb=new AlertDialog.Builder(PlaylistActivity.this);
-                    adb.setTitle("Delete?");
-                    adb.setMessage("Are you sure you want to delete " + listItems.get(position));
-                    final int positionToRemove = position;
-                    adb.setNegativeButton("Cancel", null);
-                    adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            listItems.remove(positionToRemove);
-                            adapter.notifyDataSetChanged();
-                            tinydb.putListString("Playlist", listItems);
-                        }});
-                    adb.show();
-
-                }
-
-        });
-
         String nameText = (String) getIntent().getStringExtra("nameText");
         if (nameText != null){
             adapter.add(nameText);
@@ -61,11 +42,18 @@ public class PlaylistActivity extends AppCompatActivity {
         }
     }
 
-    public void optionsClick(View v) {
+    public void addClick(View v) {
         Intent intent = new Intent(getApplicationContext(), PlaylistAddActivity.class);
         intent.putExtra("listItems", listItems);
         startActivity(intent);
     }
+
+    public void removeClick(View v){
+        Intent intent = new Intent(getApplicationContext(), PlaylistRemActivity.class);
+        startActivity(intent);
+    }
+
+
 
 
 
