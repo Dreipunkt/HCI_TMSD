@@ -90,6 +90,25 @@ public class DatasetAction {
     }
 
     /**
+     * Liste aller Songs in Datenbank (Warnung: moeglicherweise speicherintensiv).
+     *
+     * @return
+     * @throws Exception
+     */
+
+    public ArrayList<Song> getAllSongs() throws Exception {
+        ArrayList<Song> songs = new ArrayList<>();
+
+        for (File f : allFiles) {
+            H5File hdf = hdf5_getters.hdf5_open_readonly(f.getAbsolutePath());
+            songs.add(new Song(hdf5_getters.get_title(hdf), hdf5_getters.get_artist_name(hdf), hdf5_getters.get_duration(hdf), hdf5_getters.get_year(hdf)));
+            hdf5_getters.hdf5_close(hdf);
+        }
+
+        return songs;
+    }
+
+    /**
      * Recursive Suche nach Daten.
      *
      * @param directoryName
