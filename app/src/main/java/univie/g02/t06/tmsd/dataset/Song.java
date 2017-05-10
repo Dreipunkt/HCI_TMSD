@@ -6,6 +6,14 @@ public class Song {
     private double duration; // in seconds
     private int year;
 
+    /**
+     *
+     * @param title
+     * @param artist
+     * @param duration
+     * @param year
+     */
+
     Song(String title, String artist, double duration, int year) {
         this.title = title;
         this.artist = artist;

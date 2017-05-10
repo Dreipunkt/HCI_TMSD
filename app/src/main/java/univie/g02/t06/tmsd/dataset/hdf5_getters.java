@@ -557,7 +557,7 @@ public class hdf5_getters
 
     /****************************************** MAIN *****************************************/
 
-
+/*
     public static void main(String[] args)
     {
         if (args.length < 1)
@@ -664,5 +664,5 @@ public class hdf5_getters
         hdf5_close(h5);
         System.out.println("done, file closed.");
     }
-
+*/
 }
