@@ -31,18 +31,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.btn_playMyMusic:
 
                 break;
 
             case R.id.btn_playlists:
-                Intent intent = new Intent(getApplicationContext(), PlaylistActivity.class);
+                intent = new Intent(getApplicationContext(), PlaylistActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.btn_search:
-
+                intent = new Intent(getApplicationContext(), Search.class);
+                startActivity(intent);
                 break;
         }
     }
