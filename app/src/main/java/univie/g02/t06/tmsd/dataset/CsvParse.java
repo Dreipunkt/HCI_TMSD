@@ -9,9 +9,7 @@ import java.util.ArrayList;
 
 public class CsvParse {
 
-    CsvParse() {
-
-    }
+    CsvParse() {}
 
     ArrayList<Song> getAllSongs() throws Exception {
 
@@ -22,7 +20,7 @@ public class CsvParse {
         String line = null;
         int i = 0;
         while ((line = br.readLine()) != null) {
-            if (i == 0) {
+            if (i == 0) { // erste Zeile ignorieren
                 i++;
                 continue;
             }
