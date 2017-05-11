@@ -14,9 +14,12 @@ import android.widget.TextView;
 import java.io.IOException;
 
 import static android.R.attr.id;
+import static univie.g02.t06.tmsd.R.id.timePlayed;
 
 /**
  * Created by UserN1 on 08.05.17.
+ * Info: Per Intend String Array übergeben mit dem filenamen in lower case Buchstaben (String.toLowerCase() und ohne Endung)
+ * Die Datei muss sich im RAW Ordner befinden!
  */
 
 public class Player extends Activity implements View.OnClickListener {
@@ -28,6 +31,7 @@ public class Player extends Activity implements View.OnClickListener {
     private Button prev;
 
     private TextView songTitel;
+    private TextView time;
     private SeekBar seek;
 
     private ImageView album_cover;
@@ -39,6 +43,8 @@ public class Player extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_player);
 
         songTitel = (TextView) findViewById(R.id.songTitel);
+
+        time = (TextView) findViewById(timePlayed);
 
         play = (Button) findViewById(R.id.btnPlay);
         play.setOnClickListener(this);
@@ -84,8 +90,7 @@ public class Player extends Activity implements View.OnClickListener {
                 if (player == null) {
                     player = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier("mask_off", "raw", getPackageName()));
 
-                    int duration = player.getDuration()/1000;
-                    seek.setMax(duration);
+                    seek.setMax(player.getDuration()/1000);
                     player.start();
 
                     final Handler mHandler = new Handler();
@@ -93,16 +98,22 @@ public class Player extends Activity implements View.OnClickListener {
                         @Override
                         public void run() {
                             if (player != null) {
-                                int mCurrentPosition = player.getCurrentPosition() / 1000;
-                                seek.setProgress(mCurrentPosition);
+                                int position = player.getCurrentPosition() / 1000;
+                                seek.setProgress(position);
+
+                                int min = (position % 3600) / 60;
+                                int sec = position % 60;
+                                String timePlayed = String.format("%02d:%02d", min, sec);
+
+                                time.setText(timePlayed);
                                 }
-                                mHandler.postDelayed(this, 100);
+                                mHandler.postDelayed(this, 250);
                                 }
                     });
 
                     String songTitle = "test";
 
-                        songTitel.setText(songTitle);
+                    songTitel.setText(songTitle);
                 }
                 else if (player.isPlaying()) {
                     player.pause();
