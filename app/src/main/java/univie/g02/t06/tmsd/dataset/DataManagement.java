@@ -18,4 +18,14 @@ public class DataManagement {
     public ArrayList<Song> getAllSongs() {
         return allSongs;
     }
+
+    public ArrayList<Song> findSongsByTitle(String title) {
+        ArrayList<Song> result = new ArrayList<>();
+        for (Song s : allSongs) {
+            if (s.getSongName().contains(title)) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
 }
