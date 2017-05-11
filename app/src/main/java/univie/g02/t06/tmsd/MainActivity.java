@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_search:
-                intent = new Intent(getApplicationContext(), Search.class);
+                intent = new Intent(this, Search.class);
                 startActivity(intent);
                 break;
         }
