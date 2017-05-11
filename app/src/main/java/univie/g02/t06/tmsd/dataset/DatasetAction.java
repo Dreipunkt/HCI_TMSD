@@ -1,5 +1,7 @@
 package univie.g02.t06.tmsd.dataset;
 
+import android.net.Uri;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -9,6 +11,10 @@ public class DatasetAction {
 
     private static final String PATH = ""; // Pfad zu .h5 Daten
     private ArrayList<File> allFiles;
+
+    /**
+     * Rechenintensiv. Konstruktor und alle Methoden sollten nur in Thread ausgeführt werden.
+     */
 
     public DatasetAction() {
         if (allFiles == null) {
