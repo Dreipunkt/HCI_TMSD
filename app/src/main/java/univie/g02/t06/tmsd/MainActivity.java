@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_playMyMusic:
-
+                intent = new Intent(getApplicationContext(), Player.class);
+                startActivity(intent);
                 break;
 
             case R.id.btn_playlists:

@@ -1,11 +1,13 @@
 package univie.g02.t06.tmsd;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -16,21 +18,24 @@ import java.io.IOException;
 
 public class Player extends Activity implements View.OnClickListener {
 
-    MediaPlayer player;
+    private MediaPlayer player;
 
     private Button play;
     private Button next;
     private Button prev;
 
     private TextView songTitel;
+    private SeekBar seek;
 
+    private ImageView album_cover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        songTitel = (TextView) findViewById(R.id.songTitel);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.player);
+        setContentView(R.layout.activity_player);
+
+        songTitel = (TextView) findViewById(R.id.songTitel);
 
         play = (Button) findViewById(R.id.btnPlay);
         play.setOnClickListener(this);
@@ -43,37 +48,53 @@ public class Player extends Activity implements View.OnClickListener {
 
         prev = (Button) findViewById(R.id.btnPrev);
         prev.setOnClickListener(this);
-        prev.setText("<|");
+        prev.setText("|<");
+
+        seek = (SeekBar) findViewById(R.id.seekBar);
+
+        //album_cover.setImageResource(R.raw.cover_placeholder);
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnPlay:
-                if (player.isPlaying()) {
-                    player.pause();
-                }
-                else {
-                    player.reset();
-                    //player.setDataSource();
-                    try {
-                        player.prepare();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                if (player == null) {
+                    player = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier("mask_off", "raw", getPackageName()));
                     player.start();
 
                     String songTitle = "test";
                     songTitel.setText(songTitle);
                 }
+                else if (player.isPlaying()) {
+                    player.pause();
+                }
+                else {
+                    player.start();
+                }
                 break;
+
+
             case R.id.btnPrev:
-
+                //player.setDataSource();
+                try {
+                    player.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                player.start();
                 break;
+
             case R.id.btnNext:
-
+                //player.setDataSource();
+                try {
+                    player.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                player.start();
                 break;
-        }
 
+        }
     }
 
 }
