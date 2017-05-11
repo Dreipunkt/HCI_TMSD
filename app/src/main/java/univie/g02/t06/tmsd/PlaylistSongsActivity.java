@@ -12,10 +12,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import univie.g02.t06.tmsd.dummydata.DummySong;
 
-public class PlaylistRemActivity extends AppCompatActivity {
 
-    ArrayList<String> listItems=new ArrayList<String>();
+public class PlaylistSongsActivity extends AppCompatActivity {
+
+    ArrayList<DummySong> listSongs = new ArrayList<DummySong>();
+    ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     ListView listView;
 
@@ -24,20 +27,26 @@ public class PlaylistRemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_playlistrem);
+        setContentView(R.layout.activity_playlistsongs);
 
-        listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.song_ListView);
 
+        final String PlaylistName = getIntent().getStringExtra("PlaylistName");
         final TinyDB tinydb = new TinyDB(this);
-        listItems = (tinydb.getListString("Playlist"));
+        listSongs = (tinydb.getListDummySong(PlaylistName));
+
+        for(int i = 0; i < listSongs.size(); i++){
+            listItems.add(listSongs.get(i).getDummyArtistTitle());
+        }
+
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                AlertDialog.Builder adb=new AlertDialog.Builder(PlaylistRemActivity.this);
+            public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
+                AlertDialog.Builder adb=new AlertDialog.Builder(PlaylistSongsActivity.this);
                 adb.setTitle("Delete?");
                 adb.setMessage("Are you sure you want to delete " + listItems.get(position));
                 final int positionToRemove = position;
@@ -45,14 +54,20 @@ public class PlaylistRemActivity extends AppCompatActivity {
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         listItems.remove(positionToRemove);
+                        listSongs.remove(positionToRemove);
                         adapter.notifyDataSetChanged();
-                        tinydb.putListString("Playlist", listItems);
+                        tinydb.putListDummySong(PlaylistName, listSongs);
                     }
                 });
                 adb.show();
-
             }
         });
+
+        String nameText = (String) getIntent().getStringExtra("nameText");
+        if (nameText != null){
+            adapter.add(nameText);
+            tinydb.putListString("Playlist", listItems);
+        }
     }
 
     public void addClick(View v) {
@@ -61,8 +76,8 @@ public class PlaylistRemActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void listClick(View v){
-        Intent intent = new Intent(getApplicationContext(), PlaylistActivity.class);
+    public void removeClick(View v){
+        Intent intent = new Intent(getApplicationContext(), PlaylistRemActivity.class);
         startActivity(intent);
     }
 

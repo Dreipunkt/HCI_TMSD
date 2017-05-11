@@ -1,9 +1,7 @@
 package univie.g02.t06.tmsd;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,24 +20,33 @@ public class PlaylistActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        TinyDB tinydb = new TinyDB(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
 
         listView = (ListView) findViewById(R.id.list);
 
-        final TinyDB tinydb = new TinyDB(this);
         listItems = (tinydb.getListString("Playlist"));
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
         listView.setAdapter(adapter);
 
-        String nameText = (String) getIntent().getStringExtra("nameText");
+        String nameText = getIntent().getStringExtra("nameText");
         if (nameText != null){
             adapter.add(nameText);
             tinydb.putListString("Playlist", listItems);
         }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                String PlaylistName = listItems.get(position);
+                Intent intent = new Intent(getApplicationContext(), PlaylistSongsActivity.class);
+                intent.putExtra("PlaylistName", PlaylistName);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void addClick(View v) {
@@ -53,6 +60,11 @@ public class PlaylistActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
 
 
 
