@@ -58,12 +58,21 @@ public class Player extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnPlay:
-                player = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier("mask_off","raw",getPackageName()));
-                player.start();
+                if (player == null) {
+                    player = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier("mask_off", "raw", getPackageName()));
+                    player.start();
 
-                String songTitle = "test";
-                songTitel.setText(songTitle);
+                    String songTitle = "test";
+                    songTitel.setText(songTitle);
+                }
+                else if (player.isPlaying()) {
+                    player.pause();
+                }
+                else {
+                    player.start();
+                }
                 break;
+
 
             case R.id.btnPrev:
                 //player.setDataSource();
