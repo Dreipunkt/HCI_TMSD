@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-import univie.g02.t06.tmsd.dataset.DatasetAction;
 import univie.g02.t06.tmsd.dataset.Song;
 
 /**
@@ -34,20 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn_search = (Button) findViewById(R.id.btn_search);
         btn_search.setOnClickListener(this);
 
-        // TEST
-
-        try {
-            DatasetAction da = new DatasetAction();
-            ArrayList<Song> songs = da.getAllSongs();
-
-            for (Song s : songs) {
-                Log.d("SONG FOUND: ", s.getTitle());
-            }
-        } catch (Exception e) {
-                Log.d("MY_ERROR: ", e.getMessage());
-        }
-
-        // TEST END
     }
 
     @Override
