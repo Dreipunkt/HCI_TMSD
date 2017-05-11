@@ -55,6 +55,24 @@ public class DummyAPIData {
         return al;
     }
 
+    public static ArrayList<DummySong> getDummySongsbyFromYear(int year) {
+        ArrayList<DummySong> al = new ArrayList<DummySong>();
+        for (int i = 0; i < songs.length; i++){
+            DummySong element = songs[i];
+            if (element.getDummyYear() >= year) al.add(element);
+        }
+        return al;
+    }
+
+    public static ArrayList<DummySong> getDummySongsbyToYear(int year) {
+        ArrayList<DummySong> al = new ArrayList<DummySong>();
+        for (int i = 0; i < songs.length; i++){
+            DummySong element = songs[i];
+            if (element.getDummyYear() <= year) al.add(element);
+        }
+        return al;
+    }
+
     public static ArrayList<DummySong> getDummySongsbyGenre(String genre) {
         ArrayList<DummySong> al = new ArrayList<DummySong>();
         for (int i = 0; i < songs.length; i++){

@@ -22,22 +22,26 @@ public class PlaylistAddActivity extends AppCompatActivity{
     CheckBox danceCheckbox;
     CheckBox hotCheckbox;
     CheckBox genreCheckbox;
+    CheckBox yearfromCheckbox;
+    CheckBox yeartoCheckbox;
     Switch energySwitch;
     Switch danceSwitch;
     Switch hotSwitch;
     EditText nameText;
+    EditText yearfromText;
+    EditText yeartoText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setTitle("Create a Playlist");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlistadd);
 
         nameText = (EditText) findViewById(R.id.name_Text);
 
-
-        ArrayList<String> genres = new ArrayList<String>();
-        genres = DummyAPIData.getDummyAllGenres();
         genreSpinner = (Spinner) findViewById(R.id.genre_Spinner);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, DummyAPIData.getDummyAllGenres());
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
@@ -55,6 +59,36 @@ public class PlaylistAddActivity extends AppCompatActivity{
                 }
             }
         });
+
+        yearfromCheckbox = (CheckBox) findViewById(R.id.yearfrom_Checkbox);
+        yearfromText = (EditText) findViewById(R.id.yearfrom_Text);
+        yearfromCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked){
+                    yearfromText.setVisibility(View.VISIBLE);
+                } else{
+                    yearfromText.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        yeartoCheckbox = (CheckBox) findViewById(R.id.yearto_Checkbox);
+        yeartoText = (EditText) findViewById(R.id.yearto_Text);
+        yeartoCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked){
+                    yeartoText.setVisibility(View.VISIBLE);
+                } else{
+                    yeartoText.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+
 
         energyCheckbox = (CheckBox) findViewById(R.id.energy_Checkbox);
         energySwitch = (Switch) findViewById(R.id.energy_Switch);
@@ -111,6 +145,12 @@ public class PlaylistAddActivity extends AppCompatActivity{
         } else {
             if (genreSpinner.getVisibility() == View.VISIBLE){
                 playlist.retainAll(DummyAPIData.getDummySongsbyGenre(genreSpinner.getSelectedItem().toString()));
+            }
+            if (yearfromText.getVisibility() == View.VISIBLE){
+                playlist.retainAll(DummyAPIData.getDummySongsbyFromYear(Integer.parseInt(yearfromText.getText().toString())));
+            }
+            if (yeartoText.getVisibility() == View.VISIBLE){
+                playlist.retainAll(DummyAPIData.getDummySongsbyToYear(Integer.parseInt(yeartoText.getText().toString())));
             }
             if (energySwitch.getVisibility() == View.VISIBLE){
                 if (energySwitch.isChecked()){

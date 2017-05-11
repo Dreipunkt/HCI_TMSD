@@ -32,7 +32,8 @@ public class PlaylistSongsActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.song_ListView);
 
         final String PlaylistName = getIntent().getStringExtra("PlaylistName");
-        final TinyDB tinydb = new TinyDB(this);
+        setTitle("Playlist: " + PlaylistName);
+                final TinyDB tinydb = new TinyDB(this);
         listSongs = (tinydb.getListDummySong(PlaylistName));
 
         for(int i = 0; i < listSongs.size(); i++){

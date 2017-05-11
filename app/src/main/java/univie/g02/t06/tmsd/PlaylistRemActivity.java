@@ -23,6 +23,9 @@ public class PlaylistRemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        setTitle("Select Playlist to Delete");
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlistrem);
 
