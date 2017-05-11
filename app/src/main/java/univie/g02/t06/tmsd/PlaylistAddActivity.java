@@ -162,18 +162,18 @@ public class PlaylistAddActivity extends AppCompatActivity{
             }
             if (danceSwitch.getVisibility() == View.VISIBLE){
                 if (danceSwitch.isChecked()){
-                    playlist.retainAll(DummyAPIData.getDummySongsbyEnergy(true));
+                    playlist.retainAll(DummyAPIData.getDummySongsbyDance(true));
                 }
                 else {
-                    playlist.retainAll(DummyAPIData.getDummySongsbyEnergy(false));
+                    playlist.retainAll(DummyAPIData.getDummySongsbyDance(false));
                 }
             }
             if (hotSwitch.getVisibility() == View.VISIBLE){
                 if (hotSwitch.isChecked()){
-                    playlist.retainAll(DummyAPIData.getDummySongsbyEnergy(true));
+                    playlist.retainAll(DummyAPIData.getDummySongsbyHot(true));
                 }
                 else {
-                    playlist.retainAll(DummyAPIData.getDummySongsbyEnergy(false));
+                    playlist.retainAll(DummyAPIData.getDummySongsbyHot(false));
                 }
             }
             TinyDB tinydb = new TinyDB(this);
