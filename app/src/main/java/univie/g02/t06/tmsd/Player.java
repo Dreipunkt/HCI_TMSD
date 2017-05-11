@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +12,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.IOException;
+
+import static android.R.attr.id;
 
 /**
  * Created by UserN1 on 08.05.17.
@@ -50,9 +53,29 @@ public class Player extends Activity implements View.OnClickListener {
         prev.setOnClickListener(this);
         prev.setText("|<");
 
-        seek = (SeekBar) findViewById(R.id.seekBar);
+        album_cover = (ImageView) findViewById(R.id.albumCover);
+        album_cover.setImageResource(R.drawable.cover_placeholder);
 
-        //album_cover.setImageResource(R.raw.cover_placeholder);
+        seek = (SeekBar) findViewById(R.id.seekBar);
+        seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (player != null && fromUser) {
+                    player.seekTo(progress * 1000);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+
+        });
     }
     @Override
     public void onClick(View v) {
@@ -60,41 +83,42 @@ public class Player extends Activity implements View.OnClickListener {
             case R.id.btnPlay:
                 if (player == null) {
                     player = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier("mask_off", "raw", getPackageName()));
+
+                    int duration = player.getDuration()/1000;
+                    seek.setMax(duration);
                     player.start();
 
+                    final Handler mHandler = new Handler();
+                    this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (player != null) {
+                                int mCurrentPosition = player.getCurrentPosition() / 1000;
+                                seek.setProgress(mCurrentPosition);
+                                }
+                                mHandler.postDelayed(this, 100);
+                                }
+                    });
+
                     String songTitle = "test";
-                    songTitel.setText(songTitle);
+
+                        songTitel.setText(songTitle);
                 }
                 else if (player.isPlaying()) {
                     player.pause();
-                }
-                else {
+                } else {
                     player.start();
                 }
                 break;
 
 
             case R.id.btnPrev:
-                //player.setDataSource();
-                try {
-                    player.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                player.start();
+
                 break;
 
             case R.id.btnNext:
-                //player.setDataSource();
-                try {
-                    player.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                player.start();
-                break;
 
+                break;
         }
     }
-
 }
