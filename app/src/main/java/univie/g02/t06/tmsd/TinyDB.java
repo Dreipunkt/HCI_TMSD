@@ -31,6 +31,8 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,8 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-//import com.google.gson.Gson;
-
+import univie.g02.t06.tmsd.dummydata.DummySong;
 
 public class TinyDB {
 
@@ -311,29 +312,43 @@ public class TinyDB {
     }
 
 
-//    public ArrayList<Object> getListObject(String key, Class<?> mClass){
-//    	Gson gson = new Gson(); 
-//    	
-//    	ArrayList<String> objStrings = getListString(key);
-//    	ArrayList<Object> objects =  new ArrayList<Object>();
-//    	
-//    	for(String jObjString : objStrings){
-//    		Object value  = gson.fromJson(jObjString,  mClass);
-//    		objects.add(value);
-//    	}
-//    	return objects;
-//    }
-    
+    public ArrayList<Object> getListObject(String key, Class<?> mClass){
+    	Gson gson = new Gson();
 
-    
-//    public  Object getObject(String key, Class<?> classOfT){
-//
-//        String json = getString(key);
-//        Object value = new Gson().fromJson(json, classOfT);
-//        if (value == null)
-//            throw new NullPointerException();
-//        return value;
-//    }
+    	ArrayList<String> objStrings = getListString(key);
+    	ArrayList<Object> objects =  new ArrayList<Object>();
+
+    	for(String jObjString : objStrings){
+    		Object value  = gson.fromJson(jObjString,  mClass);
+    		objects.add(value);
+    	}
+    	return objects;
+    }
+
+    public ArrayList<DummySong> getListDummySong(String key){
+        Gson gson = new Gson();
+
+        ArrayList<String> objStrings = getListString(key);
+        ArrayList<DummySong> dummysongs =  new ArrayList<DummySong>();
+
+        for(String jObjString : objStrings){
+            DummySong value  = gson.fromJson(jObjString, DummySong.class);
+            dummysongs.add(value);
+        }
+        return dummysongs;
+    }
+
+
+
+
+    public  Object getObject(String key, Class<?> classOfT){
+
+        String json = getString(key);
+        Object value = new Gson().fromJson(json, classOfT);
+        if (value == null)
+            throw new NullPointerException();
+        return value;
+    }
     
     
     // Put methods
@@ -456,21 +471,31 @@ public class TinyDB {
      * @param key SharedPreferences key
      * @param obj is the Object you want to put 
      */
-//    public void putObject(String key, Object obj){
-//    	checkForNullKey(key);
-//    	Gson gson = new Gson(); 
-//    	putString(key, gson.toJson(obj));
-//    }
-//    
-//    public void putListObject(String key, ArrayList<Object> objArray){
-//    	checkForNullKey(key); 
-//    	Gson gson = new Gson(); 
-//    	ArrayList<String> objStrings = new ArrayList<String>();
-//    	for(Object obj : objArray){
-//    		objStrings.add(gson.toJson(obj));
-//    	}
-//    	putListString(key, objStrings);
-//    }
+    public void putObject(String key, Object obj){
+    	checkForNullKey(key);
+    	Gson gson = new Gson();
+    	putString(key, gson.toJson(obj));
+    }
+
+    public void putListObject(String key, ArrayList<Object> objArray){
+    	checkForNullKey(key);
+    	Gson gson = new Gson();
+    	ArrayList<String> objStrings = new ArrayList<String>();
+    	for(Object obj : objArray){
+    		objStrings.add(gson.toJson(obj));
+    	}
+    	putListString(key, objStrings);
+    }
+
+    public void putListDummySong(String key, ArrayList<DummySong> objArray){
+        checkForNullKey(key);
+        Gson gson = new Gson();
+        ArrayList<String> objStrings = new ArrayList<String>();
+        for(Object obj : objArray){
+            objStrings.add(gson.toJson(obj));
+        }
+        putListString(key, objStrings);
+    }
     
     /**
      * Remove SharedPreferences item with 'key'
