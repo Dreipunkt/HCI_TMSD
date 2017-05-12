@@ -17,7 +17,7 @@ Externe Libraries und Frameworks:
 
 
 Dauer der Entwicklung:
-[XX Stunden]
+Rauch: 16 Stunden
 
 Weitere Anmerkungen:
 -
