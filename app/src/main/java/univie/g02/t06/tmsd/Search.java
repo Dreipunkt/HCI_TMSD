@@ -1,16 +1,18 @@
 package univie.g02.t06.tmsd;
 
-import android.content.Intent;
+
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SearchView;
 import java.util.ArrayList;
+
 import univie.g02.t06.tmsd.dummydata.DummyAPIData;
 import univie.g02.t06.tmsd.dummydata.DummySong;
+import univie.g02.t06.tmsd.MyAdapter;
 
 public class Search extends AppCompatActivity {
 
@@ -18,52 +20,60 @@ public class Search extends AppCompatActivity {
     ArrayList<String> listItems = new ArrayList<String>();
     ArrayList<String> titles = new ArrayList<String>();
     ArrayList<DummySong> listSongs = new ArrayList<DummySong>();
-    ArrayAdapter<String> adapter;
+    MyAdapter adapter;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         listV = (ListView) findViewById(R.id.list_view);
-        SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        final EditText editText = (EditText) findViewById(R.id.search_edit);
 
         listSongs = DummyAPIData.getAllDummySongs();
-        for(int i = 0; i < listSongs.size(); i++){
+        for (int i = 0; i < listSongs.size(); i++) {
             listItems.add(listSongs.get(i).getDummyArtistTitle());
             titles.add(listSongs.get(i).getDummyTitle());
         }
-        adapter=new ArrayAdapter<String>(this,
+        adapter = new MyAdapter(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
         listV.setAdapter(adapter);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        editText.addTextChangedListener(new TextWatcher() {
+
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                callSearch(query);
-                return false;
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+                //String text = editText.getText().toString().toLowerCase(Locale.getDefault());
+                //adapter.filter(text);
+                //listV.setAdapter(adapter);
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                int textlength = cs.length();
+                ArrayList<String> tempArrayList = new ArrayList<String>();
+                for(String c: listItems){
+                    if (textlength <= c.length()) {
+                        if (c.toLowerCase().contains(cs.toString().toLowerCase())) {
+                            tempArrayList.add(c);
+                        }
+                    }
+                }
+                adapter = new MyAdapter(context,
+                        R.layout.customlayout,
+                        tempArrayList);
                 listV.setAdapter(adapter);
-                return false;
-            }
-
-            public void callSearch(String query) {
-
-            }
-
-        });
-
-        listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                String Title = titles.get(position);
-                Intent intent = new Intent(getApplicationContext(), Player.class);
-                intent.putExtra("SongId", Title);
-                startActivity(intent);
             }
         });
+
     }
+
 }
