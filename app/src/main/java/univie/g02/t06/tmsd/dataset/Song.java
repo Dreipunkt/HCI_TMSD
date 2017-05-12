@@ -1,22 +1,21 @@
 package univie.g02.t06.tmsd.dataset;
 
+import java.util.ArrayList;
+
 public class Song {
     private int songID;
     private String songName;
     private int listeners;
     private int playcount;
-    private int tagID;
-    private String tagName;
-    private int tagWeight;
+    private ArrayList<Tag> tags;
 
-    Song(int songID, String songName, int listeners, int playcount, int tagID, String tagName, int tagWeight) {
+    Song(int songID, String songName, int listeners, int playcount, Tag tag) {
         this.songID = songID;
         this.songName = songName;
         this.listeners = listeners;
         this.playcount = playcount;
-        this.tagID = tagID;
-        this.tagName = tagName;
-        this.tagWeight = tagWeight;
+        tags = new ArrayList<>();
+        tags.add(tag);
     }
 
     public int getSongID() {
@@ -35,15 +34,11 @@ public class Song {
         return playcount;
     }
 
-    public int getTagID() {
-        return tagID;
+    public ArrayList<Tag> getTags() {
+        return tags;
     }
 
-    public String getTagName() {
-        return tagName;
-    }
-
-    public int getTagWeight() {
-        return tagWeight;
+    void addTag(Tag tag) {
+        tags.add(tag);
     }
 }
