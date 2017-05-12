@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,8 +17,8 @@ import android.content.Context;
 
 
 import static univie.g02.t06.tmsd.R.id.albumCover;
-import static univie.g02.t06.tmsd.R.id.imageView;
 import static univie.g02.t06.tmsd.R.id.timePlayed;
+import static univie.g02.t06.tmsd.R.layout.activity_player;
 
 /**
  * Created by UserN1 on 08.05.17.
@@ -49,7 +51,7 @@ public class Player extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player);
+        setContentView(activity_player);
 
         songTitel = (TextView) findViewById(R.id.songTitel);
 
@@ -87,18 +89,19 @@ public class Player extends Activity implements View.OnClickListener {
             public void onStopTrackingTouch(SeekBar seekBar) { }
 
         });
-    }
+        Log.d("test", "test");
+        View v = new View(this);
+        v.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeLeft() {
+                Log.d("Hurra", "Supa")
+            }
+            @Override
+            public void on() {
 
-    /*
-    Player.setOnTouchListener(new OnSwipeTouchListener(Activity.this) {
-        public void onSwipeRight() {
-            Toast.makeText(Player.this, "right", Toast.LENGTH_SHORT).show();
-        }
-        public void onSwipeLeft() {
-            Toast.makeText(Player.this, "left", Toast.LENGTH_SHORT).show();
-        }
-    });
-    */
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
