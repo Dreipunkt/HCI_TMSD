@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class PlaylistActivity extends AppCompatActivity {
 
+
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> adapter;
     ListView listView;
