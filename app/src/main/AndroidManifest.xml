@@ -23,5 +23,4 @@
         <activity android:name=".PlaylistSongsActivity"></activity>
         <activity android:name=".Search"></activity>
     </application>
-
 </manifest>
