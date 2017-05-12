@@ -1,6 +1,7 @@
 package univie.g02.t06.tmsd;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,7 +36,9 @@ public class Player extends Activity implements View.OnClickListener {
     //String[] songTitel = notificationIntent.getStringArrayExtra("SONGTITEL");
 
     private MediaPlayer player;
-    private OnSwipeTouchListener swipe;
+
+    private Button search;
+    private Button playlist;
 
     private Button play;
     private Button next;
@@ -56,6 +59,12 @@ public class Player extends Activity implements View.OnClickListener {
         songTitel = (TextView) findViewById(R.id.songTitel);
 
         time = (TextView) findViewById(timePlayed);
+
+        search = (Button) findViewById(R.id.btnSearch);
+        search.setOnClickListener(this);
+
+        playlist = (Button) findViewById(R.id.btnPlaylist);
+        playlist.setOnClickListener(this);
 
         play = (Button) findViewById(R.id.btnPlay);
         play.setOnClickListener(this);
@@ -89,15 +98,11 @@ public class Player extends Activity implements View.OnClickListener {
             public void onStopTrackingTouch(SeekBar seekBar) { }
 
         });
-        Log.d("test", "test");
         View v = new View(this);
-        v.setOnTouchListener(new OnSwipeTouchListener(this) {
+        album_cover.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft() {
-                Log.d("Hurra", "Supa")
-            }
-            @Override
-            public void on() {
+                Toast.makeText(getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -105,6 +110,7 @@ public class Player extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.btnPlay:
                 if (player == null) {
@@ -131,7 +137,7 @@ public class Player extends Activity implements View.OnClickListener {
                                 }
                     });
 
-                    String songTitle = "test";
+                    String songTitle = "Mask Off";
 
                     songTitel.setText(songTitle);
                 }
@@ -150,8 +156,16 @@ public class Player extends Activity implements View.OnClickListener {
             case R.id.btnNext:
 
                 break;
+
+            case R.id.btnPlaylist:
+                intent = new Intent(getApplicationContext(), PlaylistActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.btnSearch:
+                intent = new Intent(this, Search.class);
+                startActivity(intent);
+                break;
         }
     }
-
 }
-
