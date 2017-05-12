@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button btn_search = (Button) findViewById(R.id.btn_search);
         btn_search.setOnClickListener(this);
-
+        /*
         // TEST
         try {
             DataManagement dm = new DataManagement();
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // TEST END
+        */
     }
 
     @Override
