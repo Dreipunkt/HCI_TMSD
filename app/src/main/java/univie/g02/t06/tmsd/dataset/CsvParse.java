@@ -29,7 +29,7 @@ public class CsvParse {
 
             String[] field = line.split(",");
             Song song = new Song(Integer.parseInt(field[0]), field[1].replaceAll("\"", ""), Integer.parseInt(field[2]), Integer.parseInt(field[3]), new Tag(Integer.parseInt(field[4]), field[5], Integer.parseInt(field[6])));
-            if ((curSong == null) || (curSong.getSongID() == song.getSongID())) {
+            if ((curSong == null) || (curSong.getSongID() != song.getSongID())) {
                 songs.add(song);
                 curSong = song;
             } else {
