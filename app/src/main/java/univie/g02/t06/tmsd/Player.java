@@ -1,10 +1,15 @@
 package univie.g02.t06.tmsd;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,7 +29,14 @@ import static univie.g02.t06.tmsd.R.id.timePlayed;
 
 public class Player extends Activity implements View.OnClickListener {
 
+    //Intent intent = getIntent();
+    //String songName = intent.getStringExtra("SONGTITEL");
+
+    //notificationIntent.putExtra("SONGTITEL", name);
+    //String[] songTitel = notificationIntent.getStringArrayExtra("SONGTITEL");
+
     private MediaPlayer player;
+    private OnSwipeTouchListener swipe;
 
     private Button play;
     private Button next;
@@ -72,17 +84,22 @@ public class Player extends Activity implements View.OnClickListener {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) { }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) { }
 
         });
     }
+
+
+    view.setOnTouchListener(new OnSwipeTouchListener(context) {
+        @Override
+        public void onSwipeLeft() {
+        }
+    });
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -132,4 +149,6 @@ public class Player extends Activity implements View.OnClickListener {
                 break;
         }
     }
+
 }
+
