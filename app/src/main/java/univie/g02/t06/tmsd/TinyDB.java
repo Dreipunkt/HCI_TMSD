@@ -41,6 +41,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import univie.g02.t06.tmsd.dummydata.DummySong;
+import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+
 
 public class TinyDB {
 
@@ -338,6 +340,19 @@ public class TinyDB {
         return dummysongs;
     }
 
+    public ArrayList<SubsetSong> getListSubsetSong(String key){
+        Gson gson = new Gson();
+
+        ArrayList<String> objStrings = getListString(key);
+        ArrayList<SubsetSong> subsetsongs =  new ArrayList<>();
+
+        for(String jObjString : objStrings){
+            SubsetSong value  = gson.fromJson(jObjString, SubsetSong.class);
+            subsetsongs.add(value);
+        }
+        return subsetsongs;
+    }
+
 
 
 
@@ -488,6 +503,16 @@ public class TinyDB {
     }
 
     public void putListDummySong(String key, ArrayList<DummySong> objArray){
+        checkForNullKey(key);
+        Gson gson = new Gson();
+        ArrayList<String> objStrings = new ArrayList<String>();
+        for(Object obj : objArray){
+            objStrings.add(gson.toJson(obj));
+        }
+        putListString(key, objStrings);
+    }
+
+    public void putListSubsetSong(String key, ArrayList<SubsetSong> objArray){
         checkForNullKey(key);
         Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();

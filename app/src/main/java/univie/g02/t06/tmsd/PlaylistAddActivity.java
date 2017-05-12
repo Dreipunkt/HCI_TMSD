@@ -13,27 +13,30 @@ import android.widget.Switch;
 
 import java.util.ArrayList;
 
-import univie.g02.t06.tmsd.dummydata.DummyAPIData;
-import univie.g02.t06.tmsd.dummydata.DummySong;
+import univie.g02.t06.tmsd.subsetdata.SubsetData;
+import univie.g02.t06.tmsd.subsetdata.SubsetSong;
 
 public class PlaylistAddActivity extends AppCompatActivity{
     Spinner genreSpinner;
-    CheckBox energyCheckbox;
-    CheckBox danceCheckbox;
-    CheckBox hotCheckbox;
+    CheckBox familarityCheckbox;
+    CheckBox hotnessCheckbox;
     CheckBox genreCheckbox;
     CheckBox yearfromCheckbox;
     CheckBox yeartoCheckbox;
-    Switch energySwitch;
-    Switch danceSwitch;
-    Switch hotSwitch;
+    Switch familaritySwitch;
+    Switch hotnessSwitch;
     EditText nameText;
     EditText yearfromText;
     EditText yeartoText;
+    SubsetData sd;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        sd = new SubsetData();
+
 
         setTitle("Create a Playlist");
 
@@ -43,17 +46,23 @@ public class PlaylistAddActivity extends AppCompatActivity{
         nameText = (EditText) findViewById(R.id.name_Text);
 
         genreSpinner = (Spinner) findViewById(R.id.genre_Spinner);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, DummyAPIData.getDummyAllGenres());
+
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, sd.getAllGenres());
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
         genreSpinner.setAdapter(spinnerAdapter);
 
         genreCheckbox = (CheckBox) findViewById(R.id.genre_Checkbox);
-        genreCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
-        {
+        genreCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if (isChecked){
                     genreSpinner.setVisibility(View.VISIBLE);
+                    /*genreSpinner.setOnItemClickListener (new AdapterView.OnItemClickListener() {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (isChecked){
+
+                            }*/
                 } else{
                     genreSpinner.setVisibility(View.INVISIBLE);
                 }
@@ -90,44 +99,30 @@ public class PlaylistAddActivity extends AppCompatActivity{
 
 
 
-        energyCheckbox = (CheckBox) findViewById(R.id.energy_Checkbox);
-        energySwitch = (Switch) findViewById(R.id.energy_Switch);
-        energyCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
+        familarityCheckbox = (CheckBox) findViewById(R.id.familarity_Checkbox);
+        familaritySwitch = (Switch) findViewById(R.id.familarity_Switch);
+        familarityCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if (isChecked){
-                    energySwitch.setVisibility(View.VISIBLE);
+                    familaritySwitch.setVisibility(View.VISIBLE);
                 } else{
-                    energySwitch.setVisibility(View.INVISIBLE);
+                    familaritySwitch.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
-        danceCheckbox = (CheckBox) findViewById(R.id.dance_Checkbox);
-        danceSwitch = (Switch) findViewById(R.id.dance_Switch);
-        danceCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
+        hotnessCheckbox = (CheckBox) findViewById(R.id.hotness_Checkbox);
+        hotnessSwitch = (Switch) findViewById(R.id.hotness_Switch);
+        hotnessCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if (isChecked){
-                    danceSwitch.setVisibility(View.VISIBLE);
+                    hotnessSwitch.setVisibility(View.VISIBLE);
                 } else{
-                    danceSwitch.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        hotCheckbox = (CheckBox) findViewById(R.id.hot_Checkbox);
-        hotSwitch = (Switch) findViewById(R.id.hot_Switch);
-        hotCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                if (isChecked){
-                    hotSwitch.setVisibility(View.VISIBLE);
-                } else{
-                    hotSwitch.setVisibility(View.INVISIBLE);
+                    hotnessSwitch.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -136,48 +131,43 @@ public class PlaylistAddActivity extends AppCompatActivity{
     public void addplaylistClick(View v) {
         ArrayList<String> listItems = (ArrayList<String>) getIntent().getSerializableExtra("listItems");
 
-        ArrayList<DummySong> playlist = new ArrayList<DummySong>();
-        playlist = DummyAPIData.getAllDummySongs();
+        String selectedGenre = genreSpinner.getSelectedItem().toString();
+
+        SubsetData sd = new SubsetData();
+        ArrayList<SubsetSong> playlist = new ArrayList<>();
+        playlist = sd.getAllSongs();
 
 
         if(listItems.contains(nameText.getText().toString())){
             //MESSAGE: "PLAYLIST ALREADY EXISTS"
         } else {
             if (genreSpinner.getVisibility() == View.VISIBLE){
-                playlist.retainAll(DummyAPIData.getDummySongsbyGenre(genreSpinner.getSelectedItem().toString()));
+                playlist.retainAll(sd.getSongsbyGenre(selectedGenre));
             }
             if (yearfromText.getVisibility() == View.VISIBLE){
-                playlist.retainAll(DummyAPIData.getDummySongsbyFromYear(Integer.parseInt(yearfromText.getText().toString())));
+                playlist.retainAll(sd.getSongsbyFromYear(Integer.parseInt(yearfromText.getText().toString())));
             }
             if (yeartoText.getVisibility() == View.VISIBLE){
-                playlist.retainAll(DummyAPIData.getDummySongsbyToYear(Integer.parseInt(yeartoText.getText().toString())));
+                playlist.retainAll(sd.getSongsbyToYear(Integer.parseInt(yeartoText.getText().toString())));
             }
-            if (energySwitch.getVisibility() == View.VISIBLE){
-                if (energySwitch.isChecked()){
-                    playlist.retainAll(DummyAPIData.getDummySongsbyEnergy(true));
+            if (familaritySwitch.getVisibility() == View.VISIBLE){
+                if (familaritySwitch.isChecked()){
+                    playlist.retainAll(sd.getSongsbyArtistFamilarity(true));
                 }
                 else {
-                    playlist.retainAll(DummyAPIData.getDummySongsbyEnergy(false));
+                    playlist.retainAll(sd.getSongsbyArtistFamilarity(false));
                 }
             }
-            if (danceSwitch.getVisibility() == View.VISIBLE){
-                if (danceSwitch.isChecked()){
-                    playlist.retainAll(DummyAPIData.getDummySongsbyDance(true));
+            if (hotnessSwitch.getVisibility() == View.VISIBLE){
+                if (hotnessSwitch.isChecked()){
+                    playlist.retainAll(sd.getSongbyArtistHotness(true));
                 }
                 else {
-                    playlist.retainAll(DummyAPIData.getDummySongsbyDance(false));
-                }
-            }
-            if (hotSwitch.getVisibility() == View.VISIBLE){
-                if (hotSwitch.isChecked()){
-                    playlist.retainAll(DummyAPIData.getDummySongsbyHot(true));
-                }
-                else {
-                    playlist.retainAll(DummyAPIData.getDummySongsbyHot(false));
+                    playlist.retainAll(sd.getSongbyArtistHotness(false));
                 }
             }
             TinyDB tinydb = new TinyDB(this);
-            tinydb.putListDummySong(nameText.getText().toString(), playlist);
+            tinydb.putListSubsetSong(nameText.getText().toString(), playlist);
             Intent intent = new Intent(getApplicationContext(), PlaylistActivity.class);
             intent.putExtra("nameText", nameText.getText().toString());
             startActivity(intent);

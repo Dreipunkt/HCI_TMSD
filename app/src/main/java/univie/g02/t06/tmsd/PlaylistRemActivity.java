@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
+
 public class PlaylistRemActivity extends AppCompatActivity {
 
     ArrayList<String> listItems=new ArrayList<String>();

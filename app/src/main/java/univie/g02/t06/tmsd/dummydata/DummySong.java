@@ -2,6 +2,10 @@ package univie.g02.t06.tmsd.dummydata;
 
 
 public class DummySong {
+
+
+
+
     String artist;
     String title;
     String genre;
@@ -12,6 +16,7 @@ public class DummySong {
 
     public DummySong(String artist, String title, String genre, double energy,
                      double dance, double hot, int year) {
+
         this.artist = artist;
         this.title = title;
         this.genre = genre;

@@ -12,12 +12,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import univie.g02.t06.tmsd.dummydata.DummySong;
+import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+
 
 
 public class PlaylistSongsActivity extends AppCompatActivity {
 
-    ArrayList<DummySong> listSongs = new ArrayList<DummySong>();
+    ArrayList<SubsetSong> listSongs = new ArrayList<>();
     ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     ListView listView;
@@ -33,11 +34,11 @@ public class PlaylistSongsActivity extends AppCompatActivity {
 
         final String PlaylistName = getIntent().getStringExtra("PlaylistName");
         setTitle("Playlist: " + PlaylistName);
-                final TinyDB tinydb = new TinyDB(this);
-        listSongs = (tinydb.getListDummySong(PlaylistName));
+        final TinyDB tinydb = new TinyDB(this);
+        listSongs = (tinydb.getListSubsetSong(PlaylistName));
 
         for(int i = 0; i < listSongs.size(); i++){
-            listItems.add(listSongs.get(i).getDummyArtistTitle());
+            listItems.add(listSongs.get(i).getSubsetArtistTitle());
         }
 
         adapter=new ArrayAdapter<String>(this,
@@ -57,7 +58,7 @@ public class PlaylistSongsActivity extends AppCompatActivity {
                         listItems.remove(positionToRemove);
                         listSongs.remove(positionToRemove);
                         adapter.notifyDataSetChanged();
-                        tinydb.putListDummySong(PlaylistName, listSongs);
+                        tinydb.putListSubsetSong(PlaylistName, listSongs);
                     }
                 });
                 adb.show();
