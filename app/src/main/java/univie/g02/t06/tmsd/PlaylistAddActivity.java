@@ -28,14 +28,13 @@ public class PlaylistAddActivity extends AppCompatActivity{
     EditText nameText;
     EditText yearfromText;
     EditText yeartoText;
-
     SubsetData sd;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        sd = new SubsetData(getApplicationContext());
+        sd = new SubsetData();
 
 
         setTitle("Create a Playlist");
@@ -53,12 +52,16 @@ public class PlaylistAddActivity extends AppCompatActivity{
         genreSpinner.setAdapter(spinnerAdapter);
 
         genreCheckbox = (CheckBox) findViewById(R.id.genre_Checkbox);
-        genreCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
-        {
+        genreCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if (isChecked){
                     genreSpinner.setVisibility(View.VISIBLE);
+                    /*genreSpinner.setOnItemClickListener (new AdapterView.OnItemClickListener() {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (isChecked){
+
+                            }*/
                 } else{
                     genreSpinner.setVisibility(View.INVISIBLE);
                 }
@@ -127,9 +130,10 @@ public class PlaylistAddActivity extends AppCompatActivity{
     public void addplaylistClick(View v) {
         ArrayList<String> listItems = (ArrayList<String>) getIntent().getSerializableExtra("listItems");
 
+        String selectedGenre = genreSpinner.getSelectedItem().toString();
+
+        SubsetData sd = new SubsetData();
         ArrayList<SubsetSong> playlist = new ArrayList<>();
-
-
         playlist = sd.getAllSongs();
 
 
@@ -137,7 +141,7 @@ public class PlaylistAddActivity extends AppCompatActivity{
             //MESSAGE: "PLAYLIST ALREADY EXISTS"
         } else {
             if (genreSpinner.getVisibility() == View.VISIBLE){
-                playlist.retainAll(sd.getSongsbyGenre(genreSpinner.getSelectedItem().toString()));
+                playlist.retainAll(sd.getSongsbyGenre(selectedGenre));
             }
             if (yearfromText.getVisibility() == View.VISIBLE){
                 playlist.retainAll(sd.getSongsbyFromYear(Integer.parseInt(yearfromText.getText().toString())));

@@ -1,8 +1,6 @@
 package univie.g02.t06.tmsd.subsetdata;
 
 
-import android.content.Context;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,15 +8,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import au.com.bytecode.opencsv.CSVReader;
-import univie.g02.t06.tmsd.R;
+import univie.g02.t06.tmsd.TinyDB;
 
 public class SubsetData{
-    private ArrayList<SubsetSong> songs;
+    private ArrayList<SubsetSong> songs = new ArrayList<>();
 
-    public SubsetData(Context context) {
-        if (songs == null) {
-            songs = new ArrayList<>();
-            InputStream is = context.getResources().openRawResource(R.raw.msd_sampledata);
+    public SubsetData() {
+        //if (songs == null) {
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("res/raw/msd_sampledata.csv");
             InputStreamReader reader = new InputStreamReader(is);
             CSVReader csvreader = new CSVReader(reader, ',');
             String[] line;
@@ -32,7 +29,7 @@ public class SubsetData{
             } catch(IOException e) {
                 e.printStackTrace();
             }
-        }
+        //}
     }
 
 
@@ -46,11 +43,8 @@ public class SubsetData{
         for (int i = 0; i < songs.size(); i++){
             genres.add(songs.get(i).getGenre());
         }
-        HashSet<String> hs = new HashSet<String>();
-        hs.addAll(genres);
-        genres.clear();
-        genres.addAll(hs);
-        return genres;
+        ArrayList<String> genres_unique = new ArrayList<>(new HashSet<String>(genres));
+        return genres_unique;
     }
 
     public  ArrayList<SubsetSong> getSongsbyArtist(String artist) {
@@ -106,6 +100,9 @@ public class SubsetData{
         }
         return al;
     }
+
+
+
 
     public ArrayList<SubsetSong> getSongsbyArtistFamilarity(boolean bool) {
         ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
