@@ -46,4 +46,32 @@ public class DataManagement {
         }
         return result;
     }
+
+    /**
+     * Liefert eine Liste aller aehnlichen Songs. Wahrscheinlich sehr rechenintensiv.
+     *
+     * @param ps
+     * @return
+     */
+
+    public ArrayList<Song> getSimilarSongs(Song ps) {
+        ArrayList<Song> result = new ArrayList<>();
+
+        boolean flag = false;
+
+        for (Song s : allSongs) {
+            flag = false;
+            for (Tag t : s.getTags()) {
+                for (Tag pt : ps.getTags()) {
+                    if (t.getName().contains(pt.getName())) {
+                        result.add(s);
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag) break;
+            }
+        }
+        return result;
+    }
 }
