@@ -1,11 +1,15 @@
 package univie.g02.t06.tmsd;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,14 +18,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+
 
 public class MyAdapter extends ArrayAdapter {
     private List<String> list;
     ArrayList<String> origData = new ArrayList<String>();
+    ArrayList<String> playlists = new ArrayList<String>();
     private Context context;
-    MyAdapterAdapt adapt;
-    ListView listView;
     Intent intent;
+    TinyDB tinyDB;
+    int positionclick;
+    ArrayList<String> listorig = new ArrayList<String>();
 
 
     public MyAdapter(Context context, int resources, ArrayList<String> list) {
@@ -29,6 +37,8 @@ public class MyAdapter extends ArrayAdapter {
         this.list = list;
         this.context = context;
         this.origData = list;
+        tinyDB = new TinyDB(context);
+        playlists = tinyDB.getListString("Playlist");
     }
 
     @Override
@@ -56,7 +66,7 @@ public class MyAdapter extends ArrayAdapter {
 
         //Handle TextView and display string from your list
         TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
-        listItemText.setText(list.get(position));
+        listItemText.setText(origData.get(position));
 
         listItemText.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -74,14 +84,20 @@ public class MyAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 //add to Playlist
-                /*final Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.custom_dialog);
-                dialog.setTitle("Title...");
-                listView = (ListView) dialog.findViewById(R.id.list_view1);
-                adapt = new MyAdapterAdapt(context ,R.layout.custom_dialog, Current.Names);
-                listView.setAdapter(adapt);
-                dialog.show();*/
-                notifyDataSetChanged();
+                //positionclick=(Integer)v.getTag();
+                CharSequence[] cs = playlists.toArray(new CharSequence[playlists.size()]);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setTitle("Choose Playlist").setItems(cs, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                                String clickedplaylist = playlists.get(which);
+                                //ArrayList<SubsetSong> playlist = tinyDB.getListSubsetSong(clickedplaylist);
+                                //SubsetSong song = origData.get(position);
+                                //playlist.add(song);
+                                //tinyDB.putListSubsetSong(clickedplaylist, playlist);
+                    }
+                });
+                alertDialogBuilder.create();
+                alertDialogBuilder.show();
             }
         });
 
