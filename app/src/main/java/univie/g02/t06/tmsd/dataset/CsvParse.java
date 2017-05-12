@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class CsvParse {
 
-    CsvParse() {}
+    CsvParse() {
+    }
 
     ArrayList<Song> getAllSongs() throws Exception {
 
@@ -19,14 +20,21 @@ public class CsvParse {
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line = null;
         int i = 0;
+        Song curSong = null;
         while ((line = br.readLine()) != null) {
             if (i == 0) { // erste Zeile ignorieren
                 i++;
                 continue;
             }
-            //Log.d("LINE READ: ", line);
+
             String[] field = line.split(",");
-            songs.add(new Song(Integer.parseInt(field[0]), field[1].replaceAll("\"", ""), Integer.parseInt(field[2]), Integer.parseInt(field[3]), Integer.parseInt(field[4]), field[5].replaceAll("\"", ""), Integer.parseInt(field[6])));
+            Song song = new Song(Integer.parseInt(field[0]), field[1].replaceAll("\"", ""), Integer.parseInt(field[2]), Integer.parseInt(field[3]), new Tag(Integer.parseInt(field[4]), field[5], Integer.parseInt(field[6])));
+            if ((curSong == null) || (curSong.getSongID() == song.getSongID())) {
+                songs.add(song);
+                curSong = song;
+            } else {
+                song.addTag(new Tag(Integer.parseInt(field[4]), field[5], Integer.parseInt(field[6])));
+            }
         }
 
         return songs;
