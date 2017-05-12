@@ -1,24 +1,21 @@
 package univie.g02.t06.tmsd;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.IOException;
+import android.content.Context;
 
-import static android.R.attr.id;
+
+import static univie.g02.t06.tmsd.R.id.albumCover;
+import static univie.g02.t06.tmsd.R.id.imageView;
 import static univie.g02.t06.tmsd.R.id.timePlayed;
 
 /**
@@ -71,7 +68,7 @@ public class Player extends Activity implements View.OnClickListener {
         prev.setOnClickListener(this);
         prev.setText("|<");
 
-        album_cover = (ImageView) findViewById(R.id.albumCover);
+        album_cover = (ImageView) findViewById(albumCover);
         album_cover.setImageResource(R.drawable.cover_placeholder);
 
         seek = (SeekBar) findViewById(R.id.seekBar);
@@ -92,13 +89,16 @@ public class Player extends Activity implements View.OnClickListener {
         });
     }
 
-
-    view.setOnTouchListener(new OnSwipeTouchListener(context) {
-        @Override
+    /*
+    Player.setOnTouchListener(new OnSwipeTouchListener(Activity.this) {
+        public void onSwipeRight() {
+            Toast.makeText(Player.this, "right", Toast.LENGTH_SHORT).show();
+        }
         public void onSwipeLeft() {
+            Toast.makeText(Player.this, "left", Toast.LENGTH_SHORT).show();
         }
     });
-
+    */
 
     @Override
     public void onClick(View v) {
