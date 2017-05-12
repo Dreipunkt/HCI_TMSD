@@ -1,11 +1,14 @@
 package univie.g02.t06.tmsd;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +19,9 @@ public class MyAdapter extends ArrayAdapter {
     private List<String> list;
     ArrayList<String> origData = new ArrayList<String>();
     private Context context;
+    MyAdapterAdapt adapt;
+    ListView listView;
+    Intent intent;
 
 
     public MyAdapter(Context context, int resources, ArrayList<String> list) {
@@ -38,7 +44,6 @@ public class MyAdapter extends ArrayAdapter {
     @Override
     public long getItemId(int pos) {
         return 0;
-        //just return 0 if your list items do not have an Id variable.
     }
 
     @Override
@@ -53,34 +58,33 @@ public class MyAdapter extends ArrayAdapter {
         TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position));
 
+        listItemText.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //play Song
+                intent = new Intent(context, Player.class);
+                context.startActivity(intent);
+            }
+        });
+
         //Handle buttons and add onClickListeners
         Button addBtn = (Button)view.findViewById(R.id.delete_btn);
 
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //do something
-                list.remove(position); //or some other task
+                //add to Playlist
+                /*final Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.custom_dialog);
+                dialog.setTitle("Title...");
+                listView = (ListView) dialog.findViewById(R.id.list_view1);
+                adapt = new MyAdapterAdapt(context ,R.layout.custom_dialog, Current.Names);
+                listView.setAdapter(adapt);
+                dialog.show();*/
                 notifyDataSetChanged();
             }
         });
 
         return view;
     }
-
-    /*public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        list.clear();
-        if (charText.length() == 0) {
-            list.addAll(origData);
-        } else {
-            for (String wp : origData) {
-                if (wp.toLowerCase(Locale.getDefault())
-                        .contains(charText)) {
-                    list.add(wp);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }*/
 }
