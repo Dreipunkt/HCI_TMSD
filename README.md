@@ -20,6 +20,7 @@ Externe Libraries und Frameworks:
 Dauer der Entwicklung:
 Rauch: 16 Stunden
 Schneglberger: 12h
+Andre: 14h
 
 Weitere Anmerkungen:
 -
