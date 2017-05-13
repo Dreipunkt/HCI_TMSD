@@ -15,12 +15,14 @@ Nexus 5X
 Galaxy S4 Mini (Android 6.0)
 
 Externe Libraries und Frameworks:
+com.google.code.gson gson 2.8.0
 
 
 Dauer der Entwicklung:
 Rauch: 16 Stunden
 Schneglberger: 12h
 Andre: 14h
+Boschitz: 20h
 
 Weitere Anmerkungen:
 -
