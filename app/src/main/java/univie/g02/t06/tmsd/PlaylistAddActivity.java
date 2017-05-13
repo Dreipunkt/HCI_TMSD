@@ -52,15 +52,6 @@ public class PlaylistAddActivity extends AppCompatActivity {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, sd.getAllGenres());
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
         genreSpinner.setAdapter(spinnerAdapter);
-/*
-
-        genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                                   @Override
-                                                   public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                                                       readGenre = Spinner.getSelectedItem().toString();
-                                                   }
-                                               });*/
-
 
 
         genreCheckbox = (CheckBox) findViewById(R.id.genre_Checkbox);
