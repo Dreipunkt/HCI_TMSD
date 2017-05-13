@@ -2,7 +2,9 @@ package univie.g02.t06.tmsd;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -47,6 +49,13 @@ public class Player extends Activity implements View.OnClickListener {
     private TextView songTitel;
     private TextView time;
     private SeekBar seek;
+
+    int i = 0;
+    int j = 0;
+
+    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+
+    String[] genre = new String[]{"Rock", "pop", "blues", "easy listening", "etc", "pp", "usw"};
 
     private ImageView album_cover;
 
@@ -102,8 +111,10 @@ public class Player extends Activity implements View.OnClickListener {
         album_cover.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft() {
-                Toast.makeText(getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(), "Generiere Playlist", Toast.LENGTH_SHORT).show();
+                j = (++j % 6);    i = 1;
+                songTitel.setText(genre[j] + Integer.toString(i));
+                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
             }
         });
     }
@@ -150,10 +161,18 @@ public class Player extends Activity implements View.OnClickListener {
 
 
             case R.id.btnPrev:
+                if (i > 1) {  i--; songTitel.setText(genre[j] + Integer.toString(i)); }
+                player.seekTo(0);
+                player.stop();
+                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
 
                 break;
 
             case R.id.btnNext:
+                i++; songTitel.setText(genre[j] + Integer.toString(i));
+                player.seekTo(0);
+                player.stop();
+                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
 
                 break;
 
