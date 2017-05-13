@@ -11,10 +11,11 @@ import au.com.bytecode.opencsv.CSVReader;
 
 
 public class SubsetData{
-    private ArrayList<SubsetSong> songs = new ArrayList<>();
+    ArrayList<SubsetSong> songs;
 
     public SubsetData() {
-        //if (songs == null) {
+        if (songs == null) {
+            songs = new ArrayList<>();
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("res/raw/msd_sampledata.csv");
             InputStreamReader reader = new InputStreamReader(is);
             CSVReader csvreader = new CSVReader(reader, ',');
@@ -29,13 +30,12 @@ public class SubsetData{
             } catch(IOException e) {
                 e.printStackTrace();
             }
-        //}
+        }
     }
 
 
     public ArrayList<SubsetSong> getAllSongs(){
-        ArrayList<SubsetSong> al = new ArrayList<>(songs);
-        return al;
+        return songs;
     }
 
     public ArrayList<String> getAllGenres(){
@@ -47,11 +47,32 @@ public class SubsetData{
         return genres_unique;
     }
 
+    public  ArrayList<SubsetSong> findSongsbyTitle(String title) {
+        ArrayList<SubsetSong> al = new ArrayList<>();
+        for (SubsetSong s : songs) {
+            if (s.getTitle().contains(title)) {
+                al.add(s);
+            }
+        }
+        return al;
+    }
+
+    public  ArrayList<SubsetSong> findSongsbyArtist(String artist) {
+        ArrayList<SubsetSong> al = new ArrayList<>();
+        for (SubsetSong s : songs) {
+            if (s.getArtistName().contains(artist)) {
+                al.add(s);
+            }
+        }
+        return al;
+    }
+
     public  ArrayList<SubsetSong> getSongsbyArtist(String artist) {
         ArrayList<SubsetSong> al = new ArrayList<>();
-        for (int i = 0; i < songs.size(); i++){
-            SubsetSong element = songs.get(i);
-            if (element.getArtistName() == artist) al.add(element);
+        for (SubsetSong s : songs) {
+            if (s.getArtistName().contentEquals(artist)) {
+                al.add(s);
+            }
         }
         return al;
     }
@@ -67,55 +88,49 @@ public class SubsetData{
 
     public ArrayList<SubsetSong> getSongsbyYear(int year) {
         ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
-        for (int i = 0; i < songs.size(); i++){
-            SubsetSong element = songs.get(i);
-            if (element.getYear() == year) al.add(element);
+        for (SubsetSong s : songs) {
+            if(s.getYear() == year) al.add(s);
         }
         return al;
     }
 
     public ArrayList<SubsetSong> getSongsbyFromYear(int year) {
         ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
-        for (int i = 0; i < songs.size(); i++){
-            SubsetSong element = songs.get(i);
-            if (element.getYear() >= year) al.add(element);
+        for (SubsetSong s : songs) {
+            if(s.getYear() >= year) al.add(s);
         }
         return al;
     }
 
     public ArrayList<SubsetSong> getSongsbyToYear(int year) {
         ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
-        for (int i = 0; i < songs.size(); i++){
-            SubsetSong element = songs.get(i);
-            if (element.getYear() <= year) al.add(element);
+        for (SubsetSong s : songs) {
+            if(s.getYear() <= year) al.add(s);
         }
         return al;
     }
 
     public ArrayList<SubsetSong> getSongsbyGenre(String genre) {
-        ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
-        for (int i = 0; i < songs.size(); i++){
-            SubsetSong element = songs.get(i);
-            if (element.getGenre() == genre) al.add(element);
+        ArrayList<SubsetSong> al = new ArrayList<>();
+        for (SubsetSong s : songs) {
+            if (s.getGenre().contentEquals(genre)) {
+                al.add(s);
+            }
         }
         return al;
     }
 
 
-
-
     public ArrayList<SubsetSong> getSongsbyArtistFamilarity(boolean bool) {
         ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
         if(bool) {
-            for (int i = 0; i < songs.size(); i++) {
-                SubsetSong element = songs.get(i);
-                if (element.getArtistFamiliarity() >= 0.5) al.add(element);
+            for (SubsetSong s : songs) {
+                if(s.getArtistFamiliarity() >= 0.5) al.add(s);
             }
         }
         else{
-            for (int i = 0; i < songs.size(); i++) {
-                SubsetSong element = songs.get(i);
-                if (element.getArtistFamiliarity() < 0.5) al.add(element);
+            for (SubsetSong s : songs) {
+                if(s.getArtistFamiliarity() < 0.5) al.add(s);
             }
         }
         return al;
@@ -124,15 +139,13 @@ public class SubsetData{
     public ArrayList<SubsetSong> getSongbyArtistHotness(boolean bool) {
         ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
         if(bool) {
-            for (int i = 0; i < songs.size(); i++) {
-                SubsetSong element = songs.get(i);
-                if (element.getArtistHotness() >= 0.5) al.add(element);
+            for (SubsetSong s : songs) {
+                if(s.getArtistHotness() >= 0.5) al.add(s);
             }
         }
         else{
-            for (int i = 0; i < songs.size(); i++) {
-                SubsetSong element = songs.get(i);
-                if (element.getArtistHotness() < 0.5) al.add(element);
+            for (SubsetSong s : songs) {
+                if(s.getArtistHotness() < 0.5) al.add(s);
             }
         }
         return al;

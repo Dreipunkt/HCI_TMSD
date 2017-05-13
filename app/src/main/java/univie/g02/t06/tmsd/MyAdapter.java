@@ -1,18 +1,14 @@
 package univie.g02.t06.tmsd;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +21,7 @@ public class MyAdapter extends ArrayAdapter {
     private List<String> list;
     ArrayList<String> origData = new ArrayList<String>();
     ArrayList<String> playlists = new ArrayList<String>();
+    ArrayList<SubsetSong> origData_songs = new ArrayList<>();
     private Context context;
     Intent intent;
     TinyDB tinyDB;
@@ -32,11 +29,12 @@ public class MyAdapter extends ArrayAdapter {
     ArrayList<String> listorig = new ArrayList<String>();
 
 
-    public MyAdapter(Context context, int resources, ArrayList<String> list) {
+    public MyAdapter(Context context, int resources, ArrayList<String> list, ArrayList<SubsetSong> origData_songs) {
         super(context, resources, list);
         this.list = list;
         this.context = context;
         this.origData = list;
+        this.origData_songs = origData_songs;
         tinyDB = new TinyDB(context);
         playlists = tinyDB.getListString("Playlist");
     }
@@ -90,10 +88,10 @@ public class MyAdapter extends ArrayAdapter {
                 alertDialogBuilder.setTitle("Choose Playlist").setItems(cs, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                                 String clickedplaylist = playlists.get(which);
-                                //ArrayList<SubsetSong> playlist = tinyDB.getListSubsetSong(clickedplaylist);
-                                //SubsetSong song = origData.get(position);
-                                //playlist.add(song);
-                                //tinyDB.putListSubsetSong(clickedplaylist, playlist);
+                                ArrayList<SubsetSong> playlist = tinyDB.getListSubsetSong(clickedplaylist);
+                                SubsetSong song = origData_songs.get(position);
+                                playlist.add(song);
+                                tinyDB.putListSubsetSong(clickedplaylist, playlist);
                     }
                 });
                 alertDialogBuilder.create();

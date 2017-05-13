@@ -3,17 +3,15 @@ package univie.g02.t06.tmsd;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
-import univie.g02.t06.tmsd.dataset.DataManagement;
-import univie.g02.t06.tmsd.dataset.Song;
-import univie.g02.t06.tmsd.MyAdapter;
 import univie.g02.t06.tmsd.subsetdata.SubsetData;
 import univie.g02.t06.tmsd.subsetdata.SubsetSong;
 
@@ -21,10 +19,10 @@ public class Search extends AppCompatActivity {
 
     ListView listV;
     ArrayList<String> titles = new ArrayList<String>();
-    ArrayList<Song> tempArrayList = new ArrayList<Song>();;
+    ArrayList<SubsetSong> tempArrayList = new ArrayList<>();;
     MyAdapter adapter;
     Context context;
-    DataManagement data;
+    SubsetData data;
     EditText editText;
 
     public Search() throws Exception {
@@ -46,7 +44,7 @@ public class Search extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                data = new DataManagement();
+                data = new SubsetData();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -71,13 +69,13 @@ public class Search extends AppCompatActivity {
                 public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                     tempArrayList.clear();
                     titles.clear();
-                    tempArrayList = data.findSongsByTitle(cs.toString().toLowerCase());
-                    for (Song x: tempArrayList){
-                        titles.add(x.getSongName());
+                    tempArrayList = data.findSongsbyTitle(cs.toString().toLowerCase());
+                    for (SubsetSong x: tempArrayList){
+                        titles.add(x.getTitle());
                     }
                     adapter = new MyAdapter(context,
                             R.layout.customlayout,
-                            titles);
+                            titles, tempArrayList);
                     listV.setAdapter(adapter);
                 }
             });

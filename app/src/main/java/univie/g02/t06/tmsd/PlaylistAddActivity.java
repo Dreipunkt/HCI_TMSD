@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import univie.g02.t06.tmsd.subsetdata.SubsetData;
 import univie.g02.t06.tmsd.subsetdata.SubsetSong;
 
-public class PlaylistAddActivity extends AppCompatActivity{
+public class PlaylistAddActivity extends AppCompatActivity {
     Spinner genreSpinner;
     CheckBox familarityCheckbox;
     CheckBox hotnessCheckbox;
@@ -29,6 +29,8 @@ public class PlaylistAddActivity extends AppCompatActivity{
     EditText yearfromText;
     EditText yeartoText;
     SubsetData sd;
+
+    String readGenre;
 
 
 
@@ -47,10 +49,19 @@ public class PlaylistAddActivity extends AppCompatActivity{
 
         genreSpinner = (Spinner) findViewById(R.id.genre_Spinner);
 
-
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, sd.getAllGenres());
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
         genreSpinner.setAdapter(spinnerAdapter);
+/*
+
+        genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                   @Override
+                                                   public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                                                       readGenre = Spinner.getSelectedItem().toString();
+                                                   }
+                                               });*/
+
+
 
         genreCheckbox = (CheckBox) findViewById(R.id.genre_Checkbox);
         genreCheckbox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener() {
@@ -58,16 +69,14 @@ public class PlaylistAddActivity extends AppCompatActivity{
             {
                 if (isChecked){
                     genreSpinner.setVisibility(View.VISIBLE);
-                    /*genreSpinner.setOnItemClickListener (new AdapterView.OnItemClickListener() {
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked){
-
-                            }*/
                 } else{
                     genreSpinner.setVisibility(View.INVISIBLE);
                 }
             }
         });
+
+
+
 
         yearfromCheckbox = (CheckBox) findViewById(R.id.yearfrom_Checkbox);
         yearfromText = (EditText) findViewById(R.id.yearfrom_Text);
