@@ -38,7 +38,7 @@ public class PlaylistSongsActivity extends AppCompatActivity {
         listSongs = (tinydb.getListSubsetSong(PlaylistName));
 
         for(int i = 0; i < listSongs.size(); i++){
-            listItems.add(listSongs.get(i).getSubsetArtistTitle());
+            listItems.add(listSongs.get(i).getArtistTitle());
         }
 
         adapter=new ArrayAdapter<String>(this,

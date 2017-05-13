@@ -69,9 +69,9 @@ public class Search extends AppCompatActivity {
                 public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                     tempArrayList.clear();
                     titles.clear();
-                    tempArrayList = data.findSongsbyTitle(cs.toString().toLowerCase());
+                    tempArrayList = data.findSongsbyArtistTitle(cs.toString().toLowerCase());
                     for (SubsetSong x: tempArrayList){
-                        titles.add(x.getTitle());
+                        titles.add(x.getArtistTitle());
                     }
                     adapter = new MyAdapter(context,
                             R.layout.customlayout,

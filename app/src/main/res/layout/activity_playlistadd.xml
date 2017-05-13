@@ -20,11 +20,11 @@
         android:minEms="4"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.159"
         app:layout_constraintLeft_toRightOf="@+id/yearto_Checkbox"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.474" />
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/yearfrom_Text" />
 
     <CheckBox
         android:id="@+id/yearto_Checkbox"
@@ -40,7 +40,7 @@
         app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.029"
         app:layout_constraintTop_toBottomOf="@+id/yearfrom_Checkbox" />
 
     <CheckBox
@@ -50,15 +50,15 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="8dp"
         android:text="Year From"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintVertical_bias="0.024"
+        app:layout_constraintTop_toBottomOf="@+id/genre_Checkbox" />
 
     <Switch
         android:id="@+id/hotness_Switch"
@@ -74,18 +74,18 @@
         android:textOn="High"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintLeft_toRightOf="@+id/hotness_Checkbox"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.683" />
+        app:layout_constraintVertical_bias="0.02"
+        app:layout_constraintTop_toBottomOf="@+id/familarity_Switch" />
 
     <Switch
         android:id="@+id/familarity_Switch"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="9dp"
+        android:layout_marginLeft="17dp"
         android:layout_marginTop="8dp"
         android:checked="false"
         android:showText="true"
@@ -94,8 +94,8 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/familarity_Checkbox"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.583" />
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/yearto_Text" />
 
     <TextView
         android:id="@+id/textView3"
@@ -114,12 +114,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078" />
+        app:layout_constraintVertical_bias="0.075" />
 
     <CheckBox
         android:id="@+id/familarity_Checkbox"
-        android:layout_width="135dp"
-        android:layout_height="32dp"
+        android:layout_width="120dp"
+        android:layout_height="31dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -127,26 +127,26 @@
         android:text="Familarity"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.583" />
+        app:layout_constraintVertical_bias="0.046"
+        app:layout_constraintTop_toBottomOf="@+id/yearto_Checkbox" />
 
     <Spinner
         android:id="@+id/genre_Spinner"
-        android:layout_width="197dp"
-        android:layout_height="34dp"
+        android:layout_width="149dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintLeft_toRightOf="@+id/genre_Checkbox"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297" />
+        app:layout_constraintVertical_bias="0.03"
+        app:layout_constraintTop_toBottomOf="@+id/name_Text" />
 
     <CheckBox
         android:id="@+id/hotness_Checkbox"
@@ -155,15 +155,15 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="8dp"
         android:text="Hotness"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintVertical_bias="0.013"
+        app:layout_constraintTop_toBottomOf="@+id/familarity_Checkbox" />
 
     <EditText
         android:id="@+id/name_Text"
@@ -203,18 +203,15 @@
         android:id="@+id/genre_Checkbox"
         android:layout_width="85dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="18dp"
         android:text="Genre"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.028"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
+        app:layout_constraintTop_toBottomOf="@+id/name_Text" />
 
     <EditText
         android:id="@+id/yearfrom_Text"
@@ -233,7 +230,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/yearfrom_Checkbox"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.386" />
+        app:layout_constraintVertical_bias="0.021"
+        app:layout_constraintTop_toBottomOf="@+id/genre_Spinner" />
 
 </android.support.constraint.ConstraintLayout>

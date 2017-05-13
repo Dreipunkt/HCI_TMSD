@@ -1,13 +1,12 @@
 package univie.g02.t06.tmsd.subsetdata;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 
 public class SubsetData{
@@ -17,17 +16,19 @@ public class SubsetData{
         if (songs == null) {
             songs = new ArrayList<>();
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("res/raw/msd_sampledata.csv");
-            InputStreamReader reader = new InputStreamReader(is);
-            CSVReader csvreader = new CSVReader(reader, ',');
-            String[] line;
-            try{
-                while ((line = csvreader.readNext()) != null) {
-                    SubsetSong singlesong = new SubsetSong(line[0], line[1], line[2], line[3], line[4],
-                            line[5], line[6], Double.parseDouble(line[7]), Double.parseDouble(line[8]),
-                            Double.parseDouble(line[9]), Integer.parseInt(line[10]), line[11]);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = null;
+            int i = 0;
+            try {
+                while ((line = br.readLine()) != null) {
+                    String[] field = line.split(",");
+                    SubsetSong singlesong = new SubsetSong(field[0], field[1], field[2], field[3],
+                            field[4], field[5], field[6], Double.parseDouble(field[7]),
+                            Double.parseDouble(field[8]), Double.parseDouble(field[9]),
+                            Integer.parseInt(field[10]), field[11]);
                     songs.add(singlesong);
                 }
-            } catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -47,20 +48,12 @@ public class SubsetData{
         return genres_unique;
     }
 
-    public  ArrayList<SubsetSong> findSongsbyTitle(String title) {
+    public  ArrayList<SubsetSong> findSongsbyArtistTitle(String search) {
         ArrayList<SubsetSong> al = new ArrayList<>();
+        search = search.toLowerCase();
         for (SubsetSong s : songs) {
-            if (s.getTitle().contains(title)) {
-                al.add(s);
-            }
-        }
-        return al;
-    }
-
-    public  ArrayList<SubsetSong> findSongsbyArtist(String artist) {
-        ArrayList<SubsetSong> al = new ArrayList<>();
-        for (SubsetSong s : songs) {
-            if (s.getArtistName().contains(artist)) {
+            if (s.getTitle().toLowerCase().contains(search) || s.getArtistTitle().toLowerCase().contains(search))
+            {
                 al.add(s);
             }
         }
@@ -81,7 +74,7 @@ public class SubsetData{
         ArrayList<SubsetSong> al = new ArrayList<SubsetSong>();
         for (int i = 0; i < songs.size(); i++){
             SubsetSong element = songs.get(i);
-            if (element.getTitle() == title) al.add(element);
+            if (element.getTitle().contentEquals(title)) al.add(element);
         }
         return al;
     }

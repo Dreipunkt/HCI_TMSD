@@ -81,7 +81,7 @@ public class SubsetSong {
         return genre;
     }
 
-    public String getSubsetArtistTitle() {
+    public String getArtistTitle() {
         return artist_name + " - " + title;
     }
 
