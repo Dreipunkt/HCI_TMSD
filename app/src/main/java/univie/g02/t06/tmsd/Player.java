@@ -50,10 +50,10 @@ public class Player extends Activity implements View.OnClickListener {
     private TextView time;
     private SeekBar seek;
 
-    int i = 0;
-    int j = 0;
+    public int i = 0;
+    public int j = 0;
 
-    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 500);
 
     String[] genre = new String[]{"Rock", "pop", "blues", "easy listening", "etc", "pp", "usw"};
 
@@ -125,7 +125,7 @@ public class Player extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btnPlay:
                 if (player == null) {
-                    player = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier("mask_off", "raw", getPackageName()));
+                    player = MediaPlayer.create(getApplicationContext(), getResources().getIdentifier("epic", "raw", getPackageName()));
 
                     seek.setMax(player.getDuration()/1000);
                     player.start();
@@ -148,7 +148,7 @@ public class Player extends Activity implements View.OnClickListener {
                                 }
                     });
 
-                    String songTitle = "Mask Off";
+                    String songTitle = "Epic Sax Guy";
 
                     songTitel.setText(songTitle);
                 }
@@ -162,16 +162,20 @@ public class Player extends Activity implements View.OnClickListener {
 
             case R.id.btnPrev:
                 if (i > 1) {  i--; songTitel.setText(genre[j] + Integer.toString(i)); }
-                player.seekTo(0);
-                player.stop();
+                if (player != null) {
+                    player.seekTo(0);
+                    player.stop();
+                }
                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
 
                 break;
 
             case R.id.btnNext:
                 i++; songTitel.setText(genre[j] + Integer.toString(i));
-                player.seekTo(0);
-                player.stop();
+                if (player != null) {
+                    player.seekTo(0);
+                    player.stop();
+                }
                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
 
                 break;
