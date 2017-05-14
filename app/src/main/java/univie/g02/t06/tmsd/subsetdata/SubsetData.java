@@ -15,18 +15,24 @@ public class SubsetData{
     public SubsetData() {
         if (songs == null) {
             songs = new ArrayList<>();
-            InputStream is = this.getClass().getClassLoader().getResourceAsStream("res/raw/msd_sampledata.csv");
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("res/raw/msd_sampledata_tags.csv");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line = null;
             int i = 0;
             try {
+                SubsetSong curSong = null;
                 while ((line = br.readLine()) != null) {
                     String[] field = line.split(",");
                     SubsetSong singlesong = new SubsetSong(field[0], field[1], field[2], field[3],
-                            field[4], field[5], field[6], Double.parseDouble(field[7]),
-                            Double.parseDouble(field[8]), Double.parseDouble(field[9]),
-                            Integer.parseInt(field[10]), field[11]);
-                    songs.add(singlesong);
+                            Double.parseDouble(field[4]), Double.parseDouble(field[5]),
+                            Double.parseDouble(field[6]), Integer.parseInt(field[7]), field[8],
+                            new SubsetTag(field[9], Integer.parseInt(field[10])));
+                    if ((curSong == null) || !(curSong.getTrackId().contentEquals(singlesong.getTrackId()))) {
+                        songs.add(singlesong);
+                        curSong = singlesong;
+                    } else {
+                        singlesong.addTag(new SubsetTag(field[9], Integer.parseInt(field[10])));
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -142,6 +148,27 @@ public class SubsetData{
             }
         }
         return al;
+    }
+
+    public ArrayList<SubsetSong> getSimilarSongs(SubsetSong ps) {
+        ArrayList<SubsetSong> result = new ArrayList<>();
+
+        boolean flag = false;
+
+        for (SubsetSong s : songs) {
+            flag = false;
+            for (SubsetTag t : s.getTags()) {
+                for (SubsetTag pt : ps.getTags()) {
+                    if (t.getName().contains(pt.getName())) {
+                        result.add(s);
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag) break;
+            }
+        }
+        return result;
     }
 
 }
