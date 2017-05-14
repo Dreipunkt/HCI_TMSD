@@ -150,6 +150,13 @@ public class SubsetData{
         return al;
     }
 
+    /**
+     * Liefert eine Liste aller aehnlichen Songs. Wahrscheinlich sehr rechenintensiv.
+     *
+     * @param ps
+     * @return
+     */
+
     public ArrayList<SubsetSong> getSimilarSongs(SubsetSong ps) {
         ArrayList<SubsetSong> result = new ArrayList<>();
 
