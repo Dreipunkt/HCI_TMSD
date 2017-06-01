@@ -14,14 +14,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+import univie.g02.t06.tmsd.dataset.Song;
 
 
 public class MyAdapter extends ArrayAdapter {
     private List<String> list;
     ArrayList<String> origData = new ArrayList<String>();
     ArrayList<String> playlists = new ArrayList<String>();
-    ArrayList<SubsetSong> origData_songs = new ArrayList<>();
+    ArrayList<Song> origData_songs = new ArrayList<>();
     private Context context;
     Intent intent;
     TinyDB tinyDB;
@@ -29,7 +29,7 @@ public class MyAdapter extends ArrayAdapter {
     ArrayList<String> listorig = new ArrayList<String>();
 
 
-    public MyAdapter(Context context, int resources, ArrayList<String> list, ArrayList<SubsetSong> origData_songs) {
+    public MyAdapter(Context context, int resources, ArrayList<String> list, ArrayList<Song> origData_songs) {
         super(context, resources, list);
         this.list = list;
         this.context = context;
@@ -88,10 +88,10 @@ public class MyAdapter extends ArrayAdapter {
                 alertDialogBuilder.setTitle("Choose Playlist").setItems(cs, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                                 String clickedplaylist = playlists.get(which);
-                                ArrayList<SubsetSong> playlist = tinyDB.getListSubsetSong(clickedplaylist);
-                                SubsetSong song = origData_songs.get(position);
+                                ArrayList<Song> playlist = tinyDB.getListSong(clickedplaylist);
+                                Song song = origData_songs.get(position);
                                 playlist.add(song);
-                                tinyDB.putListSubsetSong(clickedplaylist, playlist);
+                                tinyDB.putListSong(clickedplaylist, playlist);
                     }
                 });
                 alertDialogBuilder.create();

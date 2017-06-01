@@ -13,8 +13,8 @@ import android.widget.Switch;
 
 import java.util.ArrayList;
 
-import univie.g02.t06.tmsd.subsetdata.SubsetData;
-import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+import univie.g02.t06.tmsd.dataset.DataManagement;
+import univie.g02.t06.tmsd.dataset.Song;
 
 public class PlaylistAddActivity extends AppCompatActivity {
     Spinner genreSpinner;
@@ -28,7 +28,7 @@ public class PlaylistAddActivity extends AppCompatActivity {
     EditText nameText;
     EditText yearfromText;
     EditText yeartoText;
-    SubsetData sd;
+    DataManagement dm;
 
     String readGenre;
 
@@ -37,7 +37,11 @@ public class PlaylistAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        sd = new SubsetData();
+        try {
+            dm = new DataManagement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         setTitle("Create a Playlist");
@@ -49,7 +53,7 @@ public class PlaylistAddActivity extends AppCompatActivity {
 
         genreSpinner = (Spinner) findViewById(R.id.genre_Spinner);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, sd.getAllGenres());
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, dm.getAllGenres());
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
         genreSpinner.setAdapter(spinnerAdapter);
 
@@ -128,46 +132,46 @@ public class PlaylistAddActivity extends AppCompatActivity {
         });
     }
 
-    public void addplaylistClick(View v) {
+    public void addplaylistClick(View v) throws Exception {
         ArrayList<String> listItems = (ArrayList<String>) getIntent().getSerializableExtra("listItems");
 
         String selectedGenre = genreSpinner.getSelectedItem().toString();
 
-        SubsetData sd = new SubsetData();
-        ArrayList<SubsetSong> playlist = new ArrayList<>();
-        playlist = sd.getAllSongs();
+        DataManagement dm = new DataManagement();
+        ArrayList<Song> playlist = new ArrayList<>();
+        playlist = dm.getAllSongs();
 
 
         if(listItems.contains(nameText.getText().toString())){
             //MESSAGE: "PLAYLIST ALREADY EXISTS"
         } else {
             if (genreSpinner.getVisibility() == View.VISIBLE){
-                playlist.retainAll(sd.getSongsbyGenre(selectedGenre));
+                playlist.retainAll(dm.getSongsbyGenre(selectedGenre));
             }
             if (yearfromText.getVisibility() == View.VISIBLE){
-                playlist.retainAll(sd.getSongsbyFromYear(Integer.parseInt(yearfromText.getText().toString())));
+                playlist.retainAll(dm.getSongsbyFromYear(Integer.parseInt(yearfromText.getText().toString())));
             }
             if (yeartoText.getVisibility() == View.VISIBLE){
-                playlist.retainAll(sd.getSongsbyToYear(Integer.parseInt(yeartoText.getText().toString())));
+                playlist.retainAll(dm.getSongsbyToYear(Integer.parseInt(yeartoText.getText().toString())));
             }
             if (familaritySwitch.getVisibility() == View.VISIBLE){
                 if (familaritySwitch.isChecked()){
-                    playlist.retainAll(sd.getSongsbyArtistFamilarity(true));
+                    playlist.retainAll(dm.getSongsbyArtistFamilarity(true));
                 }
                 else {
-                    playlist.retainAll(sd.getSongsbyArtistFamilarity(false));
+                    playlist.retainAll(dm.getSongsbyArtistFamilarity(false));
                 }
             }
             if (hotnessSwitch.getVisibility() == View.VISIBLE){
                 if (hotnessSwitch.isChecked()){
-                    playlist.retainAll(sd.getSongbyArtistHotness(true));
+                    playlist.retainAll(dm.getSongbyArtistHotness(true));
                 }
                 else {
-                    playlist.retainAll(sd.getSongbyArtistHotness(false));
+                    playlist.retainAll(dm.getSongbyArtistHotness(false));
                 }
             }
             TinyDB tinydb = new TinyDB(this);
-            tinydb.putListSubsetSong(nameText.getText().toString(), playlist);
+            tinydb.putListSong(nameText.getText().toString(), playlist);
             Intent intent = new Intent(getApplicationContext(), PlaylistActivity.class);
             intent.putExtra("nameText", nameText.getText().toString());
             startActivity(intent);

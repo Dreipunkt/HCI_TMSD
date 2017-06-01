@@ -1,19 +1,12 @@
 package univie.g02.t06.tmsd.dataset;
 
 public class Tag {
-
-    private int id;
     private String name;
     private int weight;
 
-    Tag(int id, String name, int weight) {
-        this.id = id;
+    Tag(String name, int weight) {
         this.name = name;
         this.weight = weight;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {

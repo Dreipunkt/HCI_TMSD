@@ -12,13 +12,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+import univie.g02.t06.tmsd.dataset.Song;
 
 
 
 public class PlaylistSongsActivity extends AppCompatActivity {
 
-    ArrayList<SubsetSong> listSongs = new ArrayList<>();
+    ArrayList<Song> listSongs = new ArrayList<>();
     ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     ListView listView;
@@ -35,7 +35,7 @@ public class PlaylistSongsActivity extends AppCompatActivity {
         final String PlaylistName = getIntent().getStringExtra("PlaylistName");
         setTitle("Playlist: " + PlaylistName);
         final TinyDB tinydb = new TinyDB(this);
-        listSongs = (tinydb.getListSubsetSong(PlaylistName));
+        listSongs = (tinydb.getListSong(PlaylistName));
 
         for(int i = 0; i < listSongs.size(); i++){
             listItems.add(listSongs.get(i).getArtistTitle());
@@ -58,7 +58,7 @@ public class PlaylistSongsActivity extends AppCompatActivity {
                         listItems.remove(positionToRemove);
                         listSongs.remove(positionToRemove);
                         adapter.notifyDataSetChanged();
-                        tinydb.putListSubsetSong(PlaylistName, listSongs);
+                        tinydb.putListSong(PlaylistName, listSongs);
                     }
                 });
                 adb.show();

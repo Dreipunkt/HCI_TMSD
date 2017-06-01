@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+import univie.g02.t06.tmsd.dataset.Song;
 
 
 public class TinyDB {
@@ -326,17 +326,17 @@ public class TinyDB {
     	return objects;
     }
 
-    public ArrayList<SubsetSong> getListSubsetSong(String key){
+    public ArrayList<Song> getListSong(String key){
         Gson gson = new Gson();
 
         ArrayList<String> objStrings = getListString(key);
-        ArrayList<SubsetSong> subsetsongs =  new ArrayList<>();
+        ArrayList<Song> songs =  new ArrayList<>();
 
         for(String jObjString : objStrings){
-            SubsetSong value  = gson.fromJson(jObjString, SubsetSong.class);
-            subsetsongs.add(value);
+            Song value  = gson.fromJson(jObjString, Song.class);
+            songs.add(value);
         }
-        return subsetsongs;
+        return songs;
     }
 
 
@@ -488,7 +488,7 @@ public class TinyDB {
     	putListString(key, objStrings);
     }
 
-    public void putListSubsetSong(String key, ArrayList<SubsetSong> objArray){
+    public void putListSong(String key, ArrayList<Song> objArray){
         checkForNullKey(key);
         Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();

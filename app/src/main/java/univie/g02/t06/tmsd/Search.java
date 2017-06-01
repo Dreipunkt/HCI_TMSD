@@ -12,17 +12,17 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import univie.g02.t06.tmsd.subsetdata.SubsetData;
-import univie.g02.t06.tmsd.subsetdata.SubsetSong;
+import univie.g02.t06.tmsd.dataset.DataManagement;
+import univie.g02.t06.tmsd.dataset.Song;
 
 public class Search extends AppCompatActivity {
 
     ListView listV;
     ArrayList<String> titles = new ArrayList<String>();
-    ArrayList<SubsetSong> tempArrayList = new ArrayList<>();;
+    ArrayList<Song> tempArrayList = new ArrayList<>();;
     MyAdapter adapter;
     Context context;
-    SubsetData data;
+    DataManagement data;
     EditText editText;
 
     public Search() throws Exception {
@@ -44,7 +44,7 @@ public class Search extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                data = new SubsetData();
+                data = new DataManagement();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -70,7 +70,7 @@ public class Search extends AppCompatActivity {
                     tempArrayList.clear();
                     titles.clear();
                     tempArrayList = data.findSongsbyArtistTitle(cs.toString().toLowerCase());
-                    for (SubsetSong x: tempArrayList){
+                    for (Song x: tempArrayList){
                         titles.add(x.getArtistTitle());
                     }
                     adapter = new MyAdapter(context,
