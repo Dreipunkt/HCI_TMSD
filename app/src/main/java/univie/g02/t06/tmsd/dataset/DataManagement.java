@@ -172,11 +172,4 @@ public class DataManagement {
         }
         return result;
     }
-
-    /**
-     * Liefert eine Liste aller aehnlichen Songs. Wahrscheinlich sehr rechenintensiv.
-     *
-     * @param ps
-     * @return
-     */
 }
